@@ -2,8 +2,13 @@
     var S=-1;
     function mmss(s){var m=Math.floor(s/60),r=s%60;return (m<10?'0':'')+m+':'+(r<10?'0':'')+r}
     function pt(s){return s>0?mmss(s):'--:--'}
-    function aV(x){if(x===S)return;S=x;setVis('#sc1',x===1);setVis('#sc2',x===2);setVis('#sc3',x===3)}
+    var M=0;
+    function ind(){var m=M%10;setVis('#runbox',S===1&&m===1);setVis('#gobox',S===1&&m!==1&&m!==4)}
+    function aV(x){if(x===S)return;S=x;setVis('#sc1',x===1);setVis('#sc2',x===2);setVis('#sc3',x===3);ind()}
     var lk=0;
+    function rS(x){M=x;ind()}
+    function tri(c){c.fillStyle='#00FF00';c.beginPath();c.moveTo(0,0);c.lineTo(c.width,c.height/2);c.lineTo(0,c.height);c.closePath();c.fill()}
+    function sq(c){c.fillStyle='#FF0000';c.fillRect(0,0,c.width,c.height)}
     function pill(c){var r=c.height/2;c.lineCap='round';c.lineWidth=c.height;c.strokeStyle='#FFFFFF';c.beginPath();c.moveTo(r,r);c.lineTo(c.width-r,r);c.stroke()}
     function ev(n){$.put('/Zapp/{zapp_index}/Event',n,null,'int32')}
     function evx(n){if(lk)return;lk=1;ev(n);setTimeout(function(){lk=0},300)}
@@ -12,11 +17,11 @@
   <div id="suuntoplus">
 
     <eval input="/Zapp/{zapp_index}/Output/scr" outputFormat="script x => (aV(x),'')" default="" />
+    <eval input="/Zapp/{zapp_index}/Output/tit" outputFormat="script x => (rS(x),'')" default="" />
 
     <div id="sc1" style="top:0%;left:0%;width:100%;height:100%;">
       <div class="cm-fg" style="top:0%;left:0%;width:100%;height:18%;"><div class="sp-t-m p-hc" style="top:calc(55% - 50%e);">
-        <span><eval input="/Zapp/{zapp_index}/Output/qtr" outputFormat="script x => 'Q'+x" default="Q1" /></span>
-        <span style="padding-left:12px"><eval input="/Zapp/{zapp_index}/Output/mode" outputFormat="script x => ['READY','RUN','STOP','BREAK','FULL TIME'][x]" default="READY" /></span>
+        <eval input="/Zapp/{zapp_index}/Output/tit" outputFormat="script x => 'Q'+Math.floor(x/10)+(x%10?' '+['','RUN','STOP','BREAK','FULL TIME'][x%10]:'')" default="Q1" />
       </div></div>
 
       <div class="sp-d-l f-num p-hc" style="top:calc(30% - 50%e);">
@@ -108,10 +113,16 @@
       <div onTap="evx(8)" style="top:40%;left:66%;width:30%;height:18%"></div>
     </div>
 
+    <div id="gobox" style="top:25%;left:85%;width:6%;height:6%;">
+      <object type="canvas" build="ctx => tri(ctx)" style="position:absolute;left:0%;top:0%;width:100%;height:100%;" />
+    </div>
+    <div id="runbox" style="top:25%;left:85%;width:6%;height:6%;visibility:HIDDEN">
+      <object type="canvas" build="ctx => sq(ctx)" style="position:absolute;left:0%;top:0%;width:100%;height:100%;" />
+    </div>
+
     <userInput>
       <pushButton name="up" onClick="$.put('/Zapp/{zapp_index}/Event', 1, null, 'int32');" />
-      <pushButton name="next" onClick="$.put('/Zapp/{zapp_index}/Event', 6, null, 'int32');" />
-      <pushButton name="down" longPressDuration="5" onLongPress="$.put('/Zapp/{zapp_index}/Event', 7, null, 'int32');" />
+      <pushButton name="down" longPressDuration="5" onClick="$.put('/Zapp/{zapp_index}/Event', 6, null, 'int32');" onLongPress="$.put('/Zapp/{zapp_index}/Event', 7, null, 'int32');" />
     </userInput>
 
   </div>
