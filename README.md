@@ -12,9 +12,29 @@ SuuntoPlus app for field hockey referees. The app lives in [`field-hockey/`](fie
 
 ## Screens
 
-1. **Time and score**: quarter, state, game clock and both scores. A green triangle next to the top button means the clock is stopped (press to start), a red square means it is running (press to stop)
-2. **Penalties**: two independent slots per team
-3. **Score edit**: opened by tapping a score
+### 1. Time and score, clock stopped
+
+<img src="screen_1.png" width="240" alt="Time and score screen with the clock stopped">
+
+Shows the quarter (Q1 to Q4), the game clock and both scores. The green triangle next to the top button means the clock is stopped: press the top button to start it. The clock counts down from 17:30. Tap a score to edit it.
+
+### 2. Time and score, clock running
+
+<img src="screen_2.png" width="240" alt="Time and score screen with the clock running">
+
+The title shows RUN and the red square means the clock is running: press the top button to stop it (STOP is shown in the title). The last 10 seconds of a quarter give a short vibration every second, and an alarm sounds at 0:00. After that the screen shows BREAK and a timer counting up. The next press of the top button prepares the next quarter and the press after that starts it.
+
+### 3. Penalties
+
+<img src="screen_3.png" width="240" alt="Penalties screen">
+
+Switch to this screen with a short press of the bottom button. Every team has two independent slots. In the picture the home team has a penalty of 1:35 left, and the visitors have 5:00. The `*` marks the selected slot, the one that gets the next penalty. Tap a slot to select it, tap the selected slot again to cancel its penalty. Tap 2', 5' or 10' under a team to put that penalty in the selected slot. Penalties count down together with the game clock.
+
+### 4. Score edit
+
+<img src="screen_4.png" width="240" alt="Score edit screen">
+
+Opens when you tap a score on the time/score screen. The title shows which team you are editing. Tap the upper arrow to add a point, the lower arrow to remove one, and OK to save the score and go back. The bottom button cancels the edit.
 
 ## Before you start
 
