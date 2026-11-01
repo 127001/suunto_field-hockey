@@ -1,0 +1,119 @@
+<uiView onLoad="
+    var S=-1;
+    function mmss(s){var m=Math.floor(s/60),r=s%60;return (m<10?'0':'')+m+':'+(r<10?'0':'')+r}
+    function pt(s){return s>0?mmss(s):'--:--'}
+    function aV(x){if(x===S)return;S=x;setVis('#sc1',x===1);setVis('#sc2',x===2);setVis('#sc3',x===3)}
+    var lk=0;
+    function pill(c){var r=c.height/2;c.lineCap='round';c.lineWidth=c.height;c.strokeStyle='#FFFFFF';c.beginPath();c.moveTo(r,r);c.lineTo(c.width-r,r);c.stroke()}
+    function ev(n){$.put('/Zapp/{zapp_index}/Event',n,null,'int32')}
+    function evx(n){if(lk)return;lk=1;ev(n);setTimeout(function(){lk=0},300)}
+  ">
+
+  <div id="suuntoplus">
+
+    <eval input="/Zapp/{zapp_index}/Output/scr" outputFormat="script x => (aV(x),'')" default="" />
+
+    <div id="sc1" style="top:0%;left:0%;width:100%;height:100%;">
+      <div class="cm-fg" style="top:0%;left:0%;width:100%;height:18%;"><div class="sp-t-m p-hc" style="top:calc(55% - 50%e);">
+        <span><eval input="/Zapp/{zapp_index}/Output/qtr" outputFormat="script x => 'Q'+x" default="Q1" /></span>
+        <span style="padding-left:12px"><eval input="/Zapp/{zapp_index}/Output/mode" outputFormat="script x => ['READY','RUN','STOP','BREAK','FULL TIME'][x]" default="READY" /></span>
+      </div></div>
+
+      <div class="sp-d-l f-num p-hc" style="top:calc(30% - 50%e);">
+        <eval input="/Zapp/{zapp_index}/Output/clk" outputFormat="script x => mmss(x)" default="17:30" />
+      </div>
+
+      <div class="cm-mid sp-t-s" style="top:calc(58% - 50%e);left:calc(27% - 50%e);">HOME</div>
+      <div class="cm-mid sp-t-s" style="top:calc(58% - 50%e);left:calc(73% - 50%e);">VISIT</div>
+
+      <div class="sp-d-m f-num" style="top:calc(70% - 50%e);left:calc(27% - 50%e);">
+        <eval input="/Zapp/{zapp_index}/Output/hs" outputFormat="Count_Twodigits" default="0" />
+      </div>
+      <div class="sp-d-m f-num" style="top:calc(70% - 50%e);left:calc(73% - 50%e);">
+        <eval input="/Zapp/{zapp_index}/Output/vs" outputFormat="Count_Twodigits" default="0" />
+      </div>
+
+      <div onTap="evx(2)" style="top:52%;left:0%;width:47.5%;height:38%"></div>
+      <div onTap="evx(3)" style="top:52%;left:52.5%;width:47.5%;height:38%"></div>
+    </div>
+
+    <div id="sc2" style="top:0%;left:0%;width:100%;height:100%;visibility:HIDDEN">
+      <div class="cm-fg" style="top:0%;left:0%;width:100%;height:18%;"><div class="sp-t-m p-hc" style="top:calc(55% - 50%e);">PENALTIES</div></div>
+
+      <div class="cm-mid sp-t-s" style="top:calc(24% - 50%e);left:calc(27% - 50%e);">HOME</div>
+      <div class="cm-mid sp-t-s" style="top:calc(24% - 50%e);left:calc(73% - 50%e);">VISIT</div>
+
+      <div class="sp-t-m f-num" style="top:calc(39% - 50%e);left:calc(27% - 50%e);">
+        <eval input="/Zapp/{zapp_index}/Output/h0" outputFormat="script x => pt(x)" default="--:--" />
+      </div>
+      <div class="sp-t-m f-num" style="top:calc(54% - 50%e);left:calc(27% - 50%e);">
+        <eval input="/Zapp/{zapp_index}/Output/h1" outputFormat="script x => pt(x)" default="--:--" />
+      </div>
+      <div class="sp-t-m f-num" style="top:calc(39% - 50%e);left:calc(73% - 50%e);">
+        <eval input="/Zapp/{zapp_index}/Output/v0" outputFormat="script x => pt(x)" default="--:--" />
+      </div>
+      <div class="sp-t-m f-num" style="top:calc(54% - 50%e);left:calc(73% - 50%e);">
+        <eval input="/Zapp/{zapp_index}/Output/v1" outputFormat="script x => pt(x)" default="--:--" />
+      </div>
+
+      <div class="sp-t-m" style="top:calc(39% - 50%e);left:calc(8% - 50%e);">
+        <eval input="/Zapp/{zapp_index}/Output/sh" outputFormat="script x => x===0?'*':''" default="" />
+      </div>
+      <div class="sp-t-m" style="top:calc(54% - 50%e);left:calc(8% - 50%e);">
+        <eval input="/Zapp/{zapp_index}/Output/sh" outputFormat="script x => x===1?'*':''" default="" />
+      </div>
+      <div class="sp-t-m" style="top:calc(39% - 50%e);left:calc(54% - 50%e);">
+        <eval input="/Zapp/{zapp_index}/Output/sv" outputFormat="script x => x===0?'*':''" default="" />
+      </div>
+      <div class="sp-t-m" style="top:calc(54% - 50%e);left:calc(54% - 50%e);">
+        <eval input="/Zapp/{zapp_index}/Output/sv" outputFormat="script x => x===1?'*':''" default="" />
+      </div>
+
+      <div onTap="evx(30)" style="top:32%;left:0%;width:50%;height:14%"></div>
+      <div onTap="evx(31)" style="top:47%;left:0%;width:50%;height:14%"></div>
+      <div onTap="evx(32)" style="top:32%;left:50%;width:50%;height:14%"></div>
+      <div onTap="evx(33)" style="top:47%;left:50%;width:50%;height:14%"></div>
+
+      <div class="cm-mid sp-t-s" style="top:calc(75% - 50%e);left:calc(12% - 50%e);">2'</div>
+      <div class="cm-mid sp-t-s" style="top:calc(75% - 50%e);left:calc(27% - 50%e);">5'</div>
+      <div class="cm-mid sp-t-s" style="top:calc(75% - 50%e);left:calc(42% - 50%e);">10'</div>
+      <div class="cm-mid sp-t-s" style="top:calc(75% - 50%e);left:calc(59% - 50%e);">2'</div>
+      <div class="cm-mid sp-t-s" style="top:calc(75% - 50%e);left:calc(74% - 50%e);">5'</div>
+      <div class="cm-mid sp-t-s" style="top:calc(75% - 50%e);left:calc(89% - 50%e);">10'</div>
+
+      <div onTap="evx(10)" style="top:64%;left:5%;width:15%;height:22%"></div>
+      <div onTap="evx(11)" style="top:64%;left:20%;width:15%;height:22%"></div>
+      <div onTap="evx(12)" style="top:64%;left:35%;width:15%;height:22%"></div>
+      <div onTap="evx(20)" style="top:64%;left:52%;width:15%;height:22%"></div>
+      <div onTap="evx(21)" style="top:64%;left:67%;width:15%;height:22%"></div>
+      <div onTap="evx(22)" style="top:64%;left:82%;width:15%;height:22%"></div>
+    </div>
+
+    <div id="sc3" style="top:0%;left:0%;width:100%;height:100%;visibility:HIDDEN">
+      <div class="cm-fg" style="top:0%;left:0%;width:100%;height:18%;"><div class="sp-t-m p-hc" style="top:calc(55% - 50%e);">
+        <eval input="/Zapp/{zapp_index}/Output/et" outputFormat="script x => x===0?'HOME':'VISIT'" default="HOME" />
+      </div></div>
+
+      <img src="arrow-up.png" style="top:calc(28% - 50%e);left:calc(36% - 50%e);color:white;" />
+      <div class="sp-d-l f-num" style="top:calc(43% - 50%e);left:calc(36% - 50%e);">
+        <eval input="/Zapp/{zapp_index}/Output/ed" outputFormat="Count_Twodigits" default="0" />
+      </div>
+      <img src="arrow-down.png" style="top:calc(66% - 50%e);left:calc(36% - 50%e);color:white;" />
+
+      <object type="canvas" build="ctx => pill(ctx)" style="position:absolute;left:66%;top:40%;width:30%;height:18%;" />
+      <div class="sp-t-m" style="top:calc(49% - 50%e);left:calc(81% - 50%e);color:#000000;">OK</div>
+
+      <div onTap="evx(4)" style="top:14%;left:10%;width:52%;height:26%"></div>
+      <div onTap="evx(5)" style="top:52%;left:10%;width:52%;height:26%"></div>
+      <div onTap="evx(8)" style="top:40%;left:66%;width:30%;height:18%"></div>
+    </div>
+
+    <userInput>
+      <pushButton name="up" onClick="$.put('/Zapp/{zapp_index}/Event', 1, null, 'int32');" />
+      <pushButton name="next" onClick="$.put('/Zapp/{zapp_index}/Event', 6, null, 'int32');" />
+      <pushButton name="down" longPressDuration="5" onLongPress="$.put('/Zapp/{zapp_index}/Event', 7, null, 'int32');" />
+    </userInput>
+
+  </div>
+
+</uiView>

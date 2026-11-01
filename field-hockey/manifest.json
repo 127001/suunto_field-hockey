@@ -1,0 +1,35 @@
+{
+  "name": "Field Hockey",
+  "version": "0.1",
+  "author": "Author",
+  "description": "Field hockey referee: quarters, score and time penalties",
+  "type": "feature",
+  "usage": "workout",
+  "modificationTime": 1793277220,
+  "in": [],
+  "out": [
+    { "name": "mode" },
+    { "name": "qtr" },
+    { "name": "clk" },
+    { "name": "hs" },
+    { "name": "vs" },
+    { "name": "scr" },
+    { "name": "h0" },
+    { "name": "h1" },
+    { "name": "v0" },
+    { "name": "v1" },
+    { "name": "ed" },
+    { "name": "et" },
+    { "name": "sh" },
+    { "name": "sv" }
+  ],
+  "template": [
+    {
+      "name": "t.html"
+    }
+  ],
+  "image": [
+    { "name": "arrow-up.png", "type": "a64" },
+    { "name": "arrow-down.png", "type": "a64" }
+  ]
+}

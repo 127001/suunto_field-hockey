@@ -1,0 +1,7 @@
+# SuuntoPlus build packages
+*.fea
+*.dev
+*.wfa
+
+# macOS
+.DS_Store
